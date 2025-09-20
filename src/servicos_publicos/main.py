@@ -2,7 +2,7 @@ from typing import Annotated
 from fastapi import FastAPI, Depends, HTTPException
 from sqlmodel import Session, select
 from servicos_publicos.models.models import Servico
-from servicos_publicos.configs.database import get_session, create_db_and_tables
+from servicos_publicos.configs.database import get_session, create_db_and_tables, seed_db
 
 SessionDep = Annotated[Session, Depends(get_session)]
 
@@ -11,6 +11,7 @@ app = FastAPI()
 @app.on_event("startup")
 def on_startup():
     create_db_and_tables()
+    seed_db()
 
 @app.get("/servicos/")
 def get_servicos(session: Session = Depends(get_session)):

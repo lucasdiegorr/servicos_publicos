@@ -7,7 +7,7 @@ services:
     environment:
       DATABASE_NAME: mydatabase
       DATABASE_USER: myuser
-      DATABASE_PASSWORD: mypassword
+      DATABASE_PASSWORD: admin123
       DATABASE_HOST: db
       DATABASE_PORT: 5432
     ports:
@@ -19,7 +19,7 @@ services:
     environment:
       POSTGRES_DB: mydatabase # Sets the database name
       POSTGRES_USER: myuser # Sets the database user
-      POSTGRES_PASSWORD: mypassword # Sets the database password
+      POSTGRES_PASSWORD: admin123 # Sets the database password
     ports:
       - "5432:5432" # Maps host port 5432 to container port 5432
     volumes:

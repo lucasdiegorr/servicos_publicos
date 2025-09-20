@@ -16,3 +16,28 @@ def get_session():
 
 def create_db_and_tables():
     SQLModel.metadata.create_all(engine)
+
+def seed_db():
+    from servicos_publicos.models.models import Servico
+    from sqlmodel import select
+    with Session(engine) as session:
+        statement = select(Servico).limit(1)
+        if not session.exec(statement).first():
+            servicos_iniciais = [
+                Servico(
+                    nome="Serviço de Exemplo 1",
+                    descricao="Descrição do Serviço de Exemplo 1",
+                    link_site="https://exemplo1.com",
+                    link_chat="https://chat.exemplo1.com",
+                    categoria="Categoria A"
+                ),
+                Servico(
+                    nome="Serviço de Exemplo 2",
+                    descricao="Descrição do Serviço de Exemplo 2",
+                    link_site="https://exemplo2.com",
+                    link_chat="https://chat.exemplo2.com",
+                    categoria="Categoria B"
+                ),
+            ]
+            session.add_all(servicos_iniciais)
+            session.commit()
