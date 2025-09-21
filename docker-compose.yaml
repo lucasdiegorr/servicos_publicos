@@ -1,8 +1,21 @@
 version: '3.8'
 
 services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+
   backend:
     build:
+      context: ./backend
       dockerfile: Dockerfile
     environment:
       DATABASE_NAME: mydatabase
@@ -15,15 +28,15 @@ services:
     depends_on:
       - db
   db:
-    image: postgres:alpine # Specifies the PostgreSQL image and version
+    image: postgres:alpine
     environment:
-      POSTGRES_DB: mydatabase # Sets the database name
-      POSTGRES_USER: myuser # Sets the database user
-      POSTGRES_PASSWORD: admin123 # Sets the database password
+      POSTGRES_DB: mydatabase 
+      POSTGRES_USER: myuser 
+      POSTGRES_PASSWORD: admin123 
     ports:
-      - "5432:5432" # Maps host port 5432 to container port 5432
+      - "5432:5432" 
     volumes:
-      - db_data:/var/lib/postgresql/data # Mounts a named volume for data persistence
+      - db_data:/var/lib/postgresql/data 
 
 volumes:
   db_data: # Defines the named volume
